@@ -127,6 +127,7 @@ static int (*syscalls[])(void) = {
 [SYS_mkdir]   sys_mkdir,
 [SYS_close]   sys_close,
 [SYS_getParentID] sys_getParentID,
+[SYS_getCreationTime] sys_getCreationtime,
 };
 
 void
