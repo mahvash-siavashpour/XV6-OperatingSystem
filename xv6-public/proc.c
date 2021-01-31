@@ -599,3 +599,8 @@ updateProcTimes(){
     }
     release(&ptable.lock);
 }
+
+int
+getPTimes(int type){
+
+}

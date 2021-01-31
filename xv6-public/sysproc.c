@@ -125,3 +125,10 @@ sys_setPolicy(void){
 
     return setPolicy(plc);
 }
+int
+sys_getPTimes(void){
+    int pTimeType;
+    if(argint(0, &pTimeType) < 0)
+        return -1;
+    return getPTimes(pTimeType);
+}

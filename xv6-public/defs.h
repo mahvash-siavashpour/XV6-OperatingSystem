@@ -125,7 +125,7 @@ int             getChildren(void*,int);
 extern int             policy;
 int             setPolicy(int);
 void            updateProcTimes(void);
-
+int             getPTimes(int);
 // swtch.S
 void            swtch(struct context**, struct context*);
 
