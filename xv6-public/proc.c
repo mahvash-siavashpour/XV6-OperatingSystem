@@ -546,10 +546,28 @@ getParentID(){
 }
 
 
-int setPolicy(int newPLC){
+int
+setPolicy(int newPLC){
     if (newPLC<=2 && newPLC>=0){
         policy = newPLC;
         return 1;
     }
     return 0;
 }
+//
+//void updatePtableTimes(){
+//    struct proc *p;
+//    sti();
+//    acquire(&ptable.lock);
+//    for (p=ptable.proc; p < &ptable.proc[NPROC]; p++)
+//    {
+//        if (p -> state == SLEEPING)
+//            p -> sleepingTime += 1;
+//        else if (p -> state == RUNNING)
+//            p -> runningTime += 1;
+//        else if (p -> state == RUNNABLE)
+//            p -> readyTime +=1;
+//    }
+//    release(&ptable.lock);
+//
+//}

@@ -97,11 +97,12 @@ sys_getParentID(void)
   return getParentID();
 }
 
+// change policy of scheduler
 int
 sys_setPolicy(void){
     int plc;
     if(argint(0, &plc) < 0)
         return -1;
 
-    return setPolicy (plc);
+    return setPolicy(plc);
 }
