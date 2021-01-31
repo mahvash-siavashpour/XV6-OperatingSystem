@@ -542,5 +542,6 @@ getParentID(){
 
 int
 getCreationTime(){
-    return 200;
+    struct proc *p = myproc();
+    return p->creationTime;
 }

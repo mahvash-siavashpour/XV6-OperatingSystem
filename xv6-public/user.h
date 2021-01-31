@@ -24,7 +24,6 @@ int sleep(int);
 int uptime(void);
 int getParentID(void);
 
-int getCreationTime(void);
 
 // ulib.c
 int stat(const char*, struct stat*);

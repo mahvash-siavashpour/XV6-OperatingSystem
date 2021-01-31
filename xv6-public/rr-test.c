@@ -4,19 +4,15 @@
 
 int main(){
 
-    for(int i=0;i<10;i++){
         int pid = fork();
+
         if(pid == 0){
-//            for(int j=0;j<1000;j++){
-////                printf(1, "%d : %d\n", getpid, j);
-//            }
-            return 0;
+            printf(1, "%d\n", getpid());
         }else
         {
-            continue;
+            wait();
         }
         
-    }
-    printf(1, "%d\n", getCreationTime());
+
     return 0;
 }

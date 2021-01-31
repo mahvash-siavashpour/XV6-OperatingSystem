@@ -97,8 +97,3 @@ sys_getParentID(void)
   return getParentID();
 }
 
-int
-sys_getCreationTime(void)
-{
-    return getCreationTime();
-}
