@@ -104,6 +104,7 @@ extern int sys_write(void);
 extern int sys_uptime(void);
 extern int sys_getParentID(void);
 extern int sys_getChildren(void);
+extern int sys_getCount(void);
 extern int sys_setPolicy(void);
 extern int sys_getPTimes(void);
 
@@ -132,6 +133,7 @@ static int (*syscalls[])(void) = {
 [SYS_close]   sys_close,
 [SYS_getParentID] sys_getParentID,
 [SYS_getChildren] sys_getChildren,
+[SYS_getCount]  sys_getCount,
 [SYS_setPolicy] sys_setPolicy,
 [SYS_getPTimes] sys_getPTimes,
 };

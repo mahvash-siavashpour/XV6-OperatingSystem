@@ -6,6 +6,7 @@
 #include "x86.h"
 #include "proc.h"
 #include "spinlock.h"
+#include "syscall.h"
 
 struct {
     struct spinlock lock;
@@ -183,7 +184,7 @@ fork(void) {
     int i, pid;
     struct proc *np;
     struct proc *curproc = myproc();
-
+    curproc->sysCallCounter[SYS_fork]++;
     // Allocate process.
     if ((np = allocproc()) == 0) {
         return -1;
@@ -228,7 +229,7 @@ exit(void) {
     struct proc *curproc = myproc();
     struct proc *p;
     int fd;
-
+    curproc->sysCallCounter[SYS_exit]++;
     if (curproc == initproc)
         panic("init exiting");
 
@@ -273,6 +274,7 @@ wait(void) {
     struct proc *p;
     int havekids, pid;
     struct proc *curproc = myproc();
+    curproc->sysCallCounter[SYS_wait]++;
 
     acquire(&ptable.lock);
     for (;;) {
@@ -411,6 +413,7 @@ forkret(void) {
 void
 sleep(void *chan, struct spinlock *lk) {
     struct proc *p = myproc();
+    p->sysCallCounter[SYS_sleep]++;
 
     if (p == 0)
         panic("sleep");
@@ -470,10 +473,11 @@ wakeup(void *chan) {
 int
 kill(int pid) {
     struct proc *p;
-
+    
     acquire(&ptable.lock);
     for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
         if (p->pid == pid) {
+            p->sysCallCounter[SYS_kill]++;
             p->killed = 1;
             // Wake process from sleep if necessary.
             if (p->state == SLEEPING)
@@ -504,6 +508,7 @@ procdump(void) {
     struct proc *p;
     char *state;
     uint pc[10];
+    p->sysCallCounter[SYS_dup]++;
 
     for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
         if (p->state == UNUSED)
@@ -525,6 +530,7 @@ procdump(void) {
 int
 getParentID() {
     struct proc *p = myproc();
+    p->sysCallCounter[SYS_getParentID]++;
     int parentID = p->parent->pid;
     // int childID =
     // cprintf("this is process %d and my parent ID is %d",p->pid,parentID);
@@ -537,7 +543,7 @@ getChildren(void *ch_list, int curpid) {
     struct proc *p;
     char *children_list = (char *) ch_list;
     int cnt = 0;
-
+    acquire(&ptable.lock);
     for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
         // cprintf("p -> parent[0] -> pid = %d\n", p -> parent -> pid);
         // cprintf("curpid %d\n", curpid);
@@ -549,7 +555,7 @@ getChildren(void *ch_list, int curpid) {
         }
     }
     children_list[cnt] = 'f';
-
+    release(&ptable.lock);
     // for(int i =0;i<140;i++){
     //   children_list[i] = 'a';
     // }
@@ -559,9 +565,26 @@ getChildren(void *ch_list, int curpid) {
     return 1;
 
 }
+int 
+getCount(int pid){
+  struct proc *p;
+  acquire(&ptable.lock);
+  for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
+    if (p->pid == pid) {
+      cprintf("In the next line you can see how many times a syscall has been called:\n");
+      for (int i = 1; i <= 29; i++)
+      {
+        cprintf("syscall(%d) --> %d time[s]\n",i,p->sysCallCounter[i]);
+      }
+    }
+  }
+  release(&ptable.lock);
+  return 0;
+}
 
 int
 setPolicy(int newPLC) {
+
     if (newPLC <= 2 && newPLC >= 0) {
         policy = newPLC;
         return 1;

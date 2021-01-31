@@ -22,5 +22,6 @@
 #define SYS_close  21
 #define SYS_getParentID  22
 #define SYS_getChildren  23
+#define SYS_getCount 24
 #define SYS_setPolicy 26
 #define SYS_getPTimes 27

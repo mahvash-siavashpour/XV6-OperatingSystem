@@ -6,7 +6,7 @@
 #include "memlayout.h"
 #include "mmu.h"
 #include "proc.h"
-
+#include "syscall.h"
 int
 sys_fork(void)
 {
@@ -38,7 +38,7 @@ sys_kill(void)
 
 int
 sys_getpid(void)
-{
+{ myproc()->sysCallCounter[SYS_getpid]++;
   return myproc()->pid;
 }
 
@@ -51,6 +51,7 @@ sys_sbrk(void)
   if(argint(0, &n) < 0)
     return -1;
   addr = myproc()->sz;
+  myproc()->sysCallCounter[SYS_sbrk]++;
   if(growproc(n) < 0)
     return -1;
   return addr;
@@ -71,6 +72,7 @@ sys_sleep(void)
       release(&tickslock);
       return -1;
     }
+    myproc()->sysCallCounter[SYS_sleep]++;
     sleep(&ticks, &tickslock);
   }
   release(&tickslock);
@@ -85,6 +87,7 @@ sys_uptime(void)
   uint xticks;
 
   acquire(&tickslock);
+  myproc()->sysCallCounter[SYS_uptime]++;
   xticks = ticks;
   release(&tickslock);
   return xticks;
@@ -107,6 +110,7 @@ sys_getChildren(void)
   if(((argptr(0,(void*)&children_list,size) < 0) || argint(1,&curpid) < 0)  ){
     return -1;
   }
+  myproc()->sysCallCounter[SYS_getChildren]++;
   // cprintf("pid of father is %d\n",curpid);
   // void* ch = (void*)children_list;
   getChildren(children_list,curpid);
@@ -116,6 +120,11 @@ sys_getChildren(void)
   // }
   return 1;
  }
+int 
+sys_getCount(void){
+  return getCount(myproc()->pid);
+}
+
 // change policy of scheduler
 int
 sys_setPolicy(void){
@@ -123,6 +132,7 @@ sys_setPolicy(void){
     if(argint(0, &plc) < 0)
         return -1;
 
+    myproc()->sysCallCounter[SYS_setPolicy]++;
     return setPolicy(plc);
 }
 int
@@ -131,5 +141,7 @@ sys_getPTimes(void){
     int pid;
     if(argint(0, &pTimeType) < 0 || argint(1, &pid) < 0)
         return -1;
+    myproc()->sysCallCounter[SYS_getPTimes]++;
     return getPTimes(pTimeType, pid);
 }
+

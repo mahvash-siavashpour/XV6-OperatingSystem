@@ -49,6 +49,7 @@ struct proc {
   struct file *ofile[NOFILE];  // Open files
   struct inode *cwd;           // Current directory
   char name[16];               // Process name (debugging)
+  int sysCallCounter[NSYSCALL];// number of calling of each systemCalls 
   int creationTime;
   int terminationTime;
   int runningTime;
