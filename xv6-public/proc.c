@@ -585,7 +585,6 @@ setPolicy(int newPLC){
 
 void
 updateProcTimes(){
-    struct proc *p;
     sti();
     acquire(&ptable.lock);
     for (p=ptable.proc; p < &ptable.proc[NPROC]; p++)
@@ -602,5 +601,23 @@ updateProcTimes(){
 
 int
 getPTimes(int type){
-
+    struct proc *currp = myproc();
+    //type:
+    // 1  creationTime;
+    // 2  terminationTime;
+    // 3  runningTime;
+    // 4  readyTime;
+    // 5  sleepingTime;
+    switch (type) {
+        case 1:
+            return currp->creationTime;
+        case 2:
+            return currp->terminationTime;
+        case 3:
+            return currp->runningTime;
+        case 4:
+            return currp->readyTime;
+        case 5:
+            return currp->sleepingTime;
+    }
 }
