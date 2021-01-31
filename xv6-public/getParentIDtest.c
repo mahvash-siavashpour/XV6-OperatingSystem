@@ -4,10 +4,13 @@
 
 
 int main(){
-    // for(int i =0; i<5;i++){
-    //     if (fork() == 0){
-        printf(1,"this is process %d and my parent ID is %d\n",getpid(),getParentID());
-    //     }
-    // }
-    return 0;
+    int ParentID = getpid();
+    printf(1,"this is parent process and my id is %d \n",ParentID);
+    if( fork() == 0){
+        int childID = getpid();
+        printf(1,"this is process %d and my parent ID is %d\n",childID,getParentID());
+    }
+    wait();
+
+    exit();
 }
