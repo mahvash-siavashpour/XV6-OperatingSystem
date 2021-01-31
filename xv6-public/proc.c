@@ -566,20 +566,21 @@ getChildren(void *ch_list, int curpid) {
  
 }
 int 
-getCount(int pid){
+getCount(int pid, int syscallNum){
   struct proc *p;
   acquire(&ptable.lock);
   for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
     if (p->pid == pid) {
-      cprintf("In the next line you can see how many times a syscall has been called:\n");
-      for (int i = 1; i <= 29; i++)
-      {
-        cprintf("syscall(%d) --> %d time[s]\n",i,p->sysCallCounter[i]);
-      }
+      return p->sysCallCounter[syscallNum];
+      // cprintf("In the next line you can see how many times a syscall has been called:\n");
+      // for (int i = 1; i <= 29; i++)
+      // {
+      //   cprintf("syscall(%d) --> %d time[s]\n",i,p->sysCallCounter[i]);
+      // }
     }
   } 
   release(&ptable.lock);
-  return 0;
+  return -1;
 }
 
 int
