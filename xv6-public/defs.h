@@ -121,6 +121,7 @@ int             wait(void);
 void            wakeup(void*);
 void            yield(void);
 int             getParentID(void);
+int            getChildren(char* children_list);
 
 // swtch.S
 void            swtch(struct context**, struct context*);

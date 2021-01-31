@@ -541,3 +541,9 @@ getParentID(){
   // cprintf("this is process %d and my parent ID is %d",p->pid,parentID);
   return parentID;
 }
+
+int 
+getChirldren(char* childre_list){
+  struct proc *p = myproc();
+
+}
