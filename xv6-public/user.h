@@ -25,7 +25,7 @@ int uptime(void);
 int getParentID(void);
 int getChildren(void*,int);
 int setPolicy(int);
-int getPTimes(int);
+int getPTimes(int, int);
 
 
 // ulib.c

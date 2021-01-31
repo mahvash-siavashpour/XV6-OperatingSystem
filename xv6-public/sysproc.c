@@ -128,7 +128,8 @@ sys_setPolicy(void){
 int
 sys_getPTimes(void){
     int pTimeType;
-    if(argint(0, &pTimeType) < 0)
+    int pid;
+    if(argint(0, &pTimeType) < 0 || argint(1, &pid) < 0)
         return -1;
-    return getPTimes(pTimeType);
+    return getPTimes(pTimeType, pid);
 }
