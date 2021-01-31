@@ -508,7 +508,7 @@ procdump(void) {
     struct proc *p;
     char *state;
     uint pc[10];
-    p->sysCallCounter[SYS_dup]++;
+    myproc()->sysCallCounter[SYS_dup]++;
 
     for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
         if (p->state == UNUSED)

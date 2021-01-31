@@ -122,7 +122,11 @@ sys_getChildren(void)
  }
 int 
 sys_getCount(void){
-  return getCount(myproc()->pid);
+  int sysCallnum ; 
+  if(argint(0,&sysCallnum) < 0){
+    return -1;
+  }
+  return getCount(myproc()->pid,sysCallnum);
 }
 
 // change policy of scheduler
