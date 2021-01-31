@@ -538,6 +538,6 @@ getParentID(){
   struct proc *p = myproc();
   int parentID = p->parent->pid;
   // int childID = 
-  cprintf("this is process %d and my parent ID is %d",p->pid,parentID);
-  return 0;
+  // cprintf("this is process %d and my parent ID is %d",p->pid,parentID);
+  return parentID;
 }
