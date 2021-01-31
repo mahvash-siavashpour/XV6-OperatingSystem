@@ -12,7 +12,7 @@ struct {
 } ptable;
 
 static struct proc *initproc;
-
+int policy;
 int nextpid = 1;
 extern void forkret(void);
 extern void trapret(void);
@@ -265,6 +265,7 @@ exit(void)
 
   // Jump into the scheduler, never to return.
   curproc->state = ZOMBIE;
+  curproc -> terminationTime = ticks;
   sched();
   panic("zombie exit");
 }
@@ -544,8 +545,11 @@ getParentID(){
   return parentID;
 }
 
-int
-getCreationTime(){
-    struct proc *p = myproc();
-    return p->creationTime;
+
+int setPolicy(int newPLC){
+    if (newPLC<=2 && newPLC>=0){
+        policy = newPLC;
+        return 1;
+    }
+    return 0;
 }
