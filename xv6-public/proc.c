@@ -6,7 +6,7 @@
 #include "x86.h"
 #include "proc.h"
 #include "spinlock.h"
-
+#include <time.h>
 struct {
   struct spinlock lock;
   struct proc proc[NPROC];
@@ -215,7 +215,7 @@ fork(void)
   acquire(&ptable.lock);
 
   np->state = RUNNABLE;
-
+  np->creationTime = clock();
   release(&ptable.lock);
 
   return pid;
@@ -263,6 +263,7 @@ exit(void)
 
   // Jump into the scheduler, never to return.
   curproc->state = ZOMBIE;
+  curproc->terminationTime = clock();
   sched();
   panic("zombie exit");
 }
