@@ -100,5 +100,5 @@ sys_getParentID(void)
 int
 sys_getCreationTime(void)
 {
-    return getParentID();
+    return getCreationTime();
 }

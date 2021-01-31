@@ -105,7 +105,7 @@ extern int sys_uptime(void);
 extern int sys_getParentID(void);
 
 
-extern int sys_getParentID(void);
+extern int sys_getCreationTime(void);
 
 static int (*syscalls[])(void) = {
 [SYS_fork]    sys_fork,
@@ -130,9 +130,7 @@ static int (*syscalls[])(void) = {
 [SYS_mkdir]   sys_mkdir,
 [SYS_close]   sys_close,
 [SYS_getParentID] sys_getParentID,
-
-
-[SYS_getCreationTime] sys_getCreationtime,
+[SYS_getCreationTime]   sys_getCreationTime,
 };
 
 void
