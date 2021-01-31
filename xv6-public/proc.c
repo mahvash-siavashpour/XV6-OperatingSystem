@@ -537,16 +537,34 @@ int
 getParentID(){
   struct proc *p = myproc();
   int parentID = p->parent->pid;
-  // int childID = 
-  // cprintf("this is process %d and my parent ID is %d",p->pid,parentID);
   return parentID;
 }
 
 int 
-getChirldren(char* childre_list){
-  struct proc *p = myproc();
-  for(int i =0;i<256;i++){
-    childre_list[i] = 'a';
+getChildren(void* ch_list, int curpid){
+  
+  struct proc *p;
+  char* children_list = (char*)ch_list;
+  int cnt = 0;
+  
+  for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
+      // cprintf("p -> parent[0] -> pid = %d\n", p -> parent -> pid);
+      // cprintf("curpid %d\n", curpid);
+      if(p -> parent -> pid == curpid){
+        children_list[cnt] = (char)((p -> pid)+48);
+        cnt ++;
+        children_list[cnt] = '*';
+        cnt++;
+      }
   }
+  children_list[cnt] = 'f'; 
+  
+  // for(int i =0;i<140;i++){
+  //   children_list[i] = 'a';
+  // }
+  // for(int i =0;i<30;i++){
+  //   cprintf("%d",children_list[i]);
+  // }
   return 1;
+  
 }

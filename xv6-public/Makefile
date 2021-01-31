@@ -183,6 +183,7 @@ UPROGS=\
 	_zombie\
 	_getParentIDtest\
 	_rr-test\
+	_getChildrenTest\
 
 
 fs.img: mkfs README $(UPROGS)
@@ -245,7 +246,7 @@ qemu-nox-gdb: fs.img xv6.img .gdbinit
 	$(QEMU) -nographic $(QEMUOPTS) -S $(QEMUGDB)
 
 # CUT HERE
-# prepare dist for students
+# prepare dist for students 
 # after running make dist, probably want to
 # rename it to rev0 or rev1 or so on and then
 # check in that version.
@@ -254,6 +255,7 @@ EXTRA=\
 	mkfs.c ulib.c user.h cat.c echo.c forktest.c grep.c kill.c\
 	ln.c ls.c mkdir.c rm.c stressfs.c usertests.c wc.c zombie.c\
 	getParentIDtest.c\
+	getChildrenTest.c\
 	printf.c umalloc.c\
 	README dot-bochsrc *.pl toc.* runoff runoff1 runoff.list\
 	.gdbinit.tmpl gdbutil\

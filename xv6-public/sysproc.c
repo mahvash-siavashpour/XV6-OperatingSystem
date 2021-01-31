@@ -97,14 +97,22 @@ sys_getParentID(void)
   return getParentID();
 }
 
+
 int 
 sys_getChildren(void)
 {  
-  
-  int chidren_list_len = 256;
-  char children_list[chidren_list_len];
-  int size =  sizeof(char) * chidren_list_len;
-  if(argptr(0,(void*)&children_list,size) < 0)
+  int curpid ;
+  char* children_list;
+  int size =  sizeof(char) * 140;
+  if(((argptr(0,(void*)&children_list,size) < 0) || argint(1,&curpid) < 0)  ){
     return -1;
-  return getChildren(children_list);
-}
+  }
+  // cprintf("pid of father is %d\n",curpid);
+  // void* ch = (void*)children_list;
+  getChildren(children_list,curpid);
+  // children_list = (char*)ch;
+  // for(int i =0;i<30;i++){
+  //   cprintf("%d",children_list[i]);
+  // }
+  return 1;
+ }
