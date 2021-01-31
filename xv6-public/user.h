@@ -24,7 +24,7 @@ int sleep(int);
 int uptime(void);
 int getParentID(void);
 int getChildren(void*,int);
-int getCount(int);
+int getCount(int, int);
 int setPolicy(int);
 int getPTimes(int, int);
 
