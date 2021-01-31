@@ -23,6 +23,7 @@ char* sbrk(int);
 int sleep(int);
 int uptime(void);
 int getParentID(void);
+int setPolicy(int);
 
 
 // ulib.c
