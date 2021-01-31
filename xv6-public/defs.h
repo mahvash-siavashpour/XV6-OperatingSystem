@@ -121,6 +121,7 @@ int             wait(void);
 void            wakeup(void*);
 void            yield(void);
 int             getParentID(void);
+int             getChildren(void*,int);
 extern int             policy;
 int             setPolicy(int);
 void            updateProcTimes(void);

@@ -97,6 +97,25 @@ sys_getParentID(void)
   return getParentID();
 }
 
+
+int 
+sys_getChildren(void)
+{  
+  int curpid ;
+  char* children_list;
+  int size =  sizeof(char) * 140;
+  if(((argptr(0,(void*)&children_list,size) < 0) || argint(1,&curpid) < 0)  ){
+    return -1;
+  }
+  // cprintf("pid of father is %d\n",curpid);
+  // void* ch = (void*)children_list;
+  getChildren(children_list,curpid);
+  // children_list = (char*)ch;
+  // for(int i =0;i<30;i++){
+  //   cprintf("%d",children_list[i]);
+  // }
+  return 1;
+ }
 // change policy of scheduler
 int
 sys_setPolicy(void){

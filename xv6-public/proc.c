@@ -545,6 +545,34 @@ getParentID(){
   return parentID;
 }
 
+int
+getChildren(void* ch_list, int curpid){
+
+  struct proc *p;
+  char* children_list = (char*)ch_list;
+  int cnt = 0;
+
+  for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
+      // cprintf("p -> parent[0] -> pid = %d\n", p -> parent -> pid);
+      // cprintf("curpid %d\n", curpid);
+      if(p -> parent -> pid == curpid){
+        children_list[cnt] = (char)((p -> pid)+48);
+        cnt ++;
+        children_list[cnt] = '*';
+        cnt++;
+      }
+  }
+  children_list[cnt] = 'f';
+
+  // for(int i =0;i<140;i++){
+  //   children_list[i] = 'a';
+  // }
+  // for(int i =0;i<30;i++){
+  //   cprintf("%d",children_list[i]);
+  // }
+  return 1;
+
+}
 
 int
 setPolicy(int newPLC){

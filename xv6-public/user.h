@@ -23,6 +23,7 @@ char* sbrk(int);
 int sleep(int);
 int uptime(void);
 int getParentID(void);
+int getChildren(void*,int);
 int setPolicy(int);
 
 
