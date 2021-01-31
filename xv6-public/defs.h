@@ -122,7 +122,7 @@ void            wakeup(void*);
 void            yield(void);
 int             getParentID(void);
 int             getChildren(void*,int);
-int             getCount(int); 
+int             getCount(int, int); 
 extern int             policy;
 int             setPolicy(int);
 void            updateProcTimes(void);
