@@ -98,13 +98,12 @@ sys_getParentID(void)
 }
 
 int 
-// sys_getChildren(void)
-// { 
-//   int chidren_list_len = 128;
-//   char children_list[chidren_list_len];
-//   int size =  sizeof(char) * chidren_list_len;
-//   if(argptr(0,(void*) &children_list,size) < 0)
-//     return -1;
-  
-//   return getChildren();
-// }
+sys_getChildren(void)
+{ 
+  int chidren_list_len = 256;
+  char children_list[chidren_list_len];
+  int size =  sizeof(char) * chidren_list_len;
+  if(argptr(0,(void*)&children_list,size) < 0)
+    return -1;
+  return getChildren(children_list);
+}

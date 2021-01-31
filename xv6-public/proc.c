@@ -545,5 +545,8 @@ getParentID(){
 int 
 getChirldren(char* childre_list){
   struct proc *p = myproc();
-
+  for(int i =0;i<256;i++){
+    childre_list[i] = 'a';
+  }
+  return 1;
 }
