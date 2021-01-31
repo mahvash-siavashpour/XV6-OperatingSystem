@@ -555,7 +555,8 @@ setPolicy(int newPLC){
     return 0;
 }
 
-void updateProcTimes(){
+void
+updateProcTimes(){
     struct proc *p;
     sti();
     acquire(&ptable.lock);

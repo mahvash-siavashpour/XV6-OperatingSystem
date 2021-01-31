@@ -123,7 +123,7 @@ void            yield(void);
 int             getParentID(void);
 extern int             policy;
 int             setPolicy(int);
-void            updateProcTime(void);
+void            updateProcTimes(void);
 
 // swtch.S
 void            swtch(struct context**, struct context*);

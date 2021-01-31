@@ -50,7 +50,8 @@ trap(struct trapframe *tf) {
                 wakeup(&ticks);
                 release(&tickslock);
             }
-
+            //update time of every process
+            updateProcTimes();
 
             lapiceoi();
             break;
