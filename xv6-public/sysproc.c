@@ -116,3 +116,12 @@ sys_getChildren(void)
   // }
   return 1;
  }
+// change policy of scheduler
+int
+sys_setPolicy(void){
+    int plc;
+    if(argint(0, &plc) < 0)
+        return -1;
+
+    return setPolicy(plc);
+}

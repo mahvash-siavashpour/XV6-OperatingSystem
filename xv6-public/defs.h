@@ -122,6 +122,8 @@ void            wakeup(void*);
 void            yield(void);
 int             getParentID(void);
 int             getChildren(void*,int);
+extern int             policy;
+int             setPolicy(int);
 
 // swtch.S
 void            swtch(struct context**, struct context*);

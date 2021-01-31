@@ -6,14 +6,13 @@
 #include "x86.h"
 #include "proc.h"
 #include "spinlock.h"
-
 struct {
   struct spinlock lock;
   struct proc proc[NPROC];
 } ptable;
 
 static struct proc *initproc;
-
+int policy;
 int nextpid = 1;
 extern void forkret(void);
 extern void trapret(void);
@@ -88,6 +87,10 @@ allocproc(void)
 found:
   p->state = EMBRYO;
   p->pid = nextpid++;
+  p -> creationTime = ticks;
+  p -> runningTime = 0;
+  p -> sleepingTime = 0;
+  p -> readyTime = 0;
 
   release(&ptable.lock);
 
@@ -215,7 +218,6 @@ fork(void)
   acquire(&ptable.lock);
 
   np->state = RUNNABLE;
-
   release(&ptable.lock);
 
   return pid;
@@ -263,6 +265,7 @@ exit(void)
 
   // Jump into the scheduler, never to return.
   curproc->state = ZOMBIE;
+  curproc -> terminationTime = ticks;
   sched();
   panic("zombie exit");
 }
@@ -568,3 +571,29 @@ getChildren(void* ch_list, int curpid){
   return 1;
   
 }
+
+int
+setPolicy(int newPLC){
+    if (newPLC<=2 && newPLC>=0){
+        policy = newPLC;
+        return 1;
+    }
+    return 0;
+}
+//
+//void updatePtableTimes(){
+//    struct proc *p;
+//    sti();
+//    acquire(&ptable.lock);
+//    for (p=ptable.proc; p < &ptable.proc[NPROC]; p++)
+//    {
+//        if (p -> state == SLEEPING)
+//            p -> sleepingTime += 1;
+//        else if (p -> state == RUNNING)
+//            p -> runningTime += 1;
+//        else if (p -> state == RUNNABLE)
+//            p -> readyTime +=1;
+//    }
+//    release(&ptable.lock);
+//
+//}
