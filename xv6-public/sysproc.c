@@ -123,7 +123,8 @@ sys_getChildren(void)
 int 
 sys_getCount(void){
   int sysCallnum ; 
-  if(argint(0,&sysCallnum) < 0){
+  int pid;
+  if(argint(0,&pid) < 0 || (argint(1,&sysCallnum) <0)){
     return -1;
   }
   return getCount(myproc()->pid,sysCallnum);
