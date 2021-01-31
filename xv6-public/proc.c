@@ -577,7 +577,7 @@ getCount(int pid){
         cprintf("syscall(%d) --> %d time[s]\n",i,p->sysCallCounter[i]);
       }
     }
-  }
+  } 
   release(&ptable.lock);
   return 0;
 }
