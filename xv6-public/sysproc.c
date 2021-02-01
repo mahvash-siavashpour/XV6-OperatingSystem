@@ -127,7 +127,7 @@ sys_getSyscallCounter(void){
   if(argint(0,&pid) < 0 || (argint(1,&sysCallnum) <0)){
     return -1;
   }
-  return getCount(myproc()->pid,sysCallnum);
+  return getSyscallCounter(myproc()->pid,sysCallnum);
 }
 
 // change policy of scheduler

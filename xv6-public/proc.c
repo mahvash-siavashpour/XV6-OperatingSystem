@@ -655,12 +655,12 @@ getSyscallCounter(int pid, int syscallNum) {
     for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
         if (p->pid == pid) {
 
-            // cprintf("In the next line you can see how many times a syscall has been called:\n");
-            // for (int i = 1; i <= 29; i++)
-            // {
-            //   cprintf("syscall(%d) --> %d time[s]\n",i,p->sysCallCounter[i]);
-            // }
-            // cprintf("syscall(%d) --> %d time[s]\n",syscallNum,p->sysCallCounter[syscallNum]);
+            cprintf("In the next line you can see how many times a syscall has been called:\n");
+            for (int i = 1; i <= 29; i++)
+            {
+              cprintf("syscall(%d) --> %d time[s]\n",i,p->sysCallCounter[i]);
+            }
+            cprintf("syscall(%d) --> %d time[s]\n",syscallNum,p->sysCallCounter[syscallNum]);
             return p->sysCallCounter[syscallNum];
         }
     }
