@@ -649,7 +649,7 @@ getChildren(void *ch_list, int curpid) {
 }
 
 int
-getCount(int pid, int syscallNum) {
+getSyscallCounter(int pid, int syscallNum) {
     struct proc *p;
 
     for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) {

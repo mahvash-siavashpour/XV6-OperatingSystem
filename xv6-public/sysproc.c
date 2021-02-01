@@ -121,7 +121,7 @@ sys_getChildren(void)
   return 1;
  }
 int 
-sys_getCount(void){
+sys_getSyscallCounter(void){
   int sysCallnum ; 
   int pid;
   if(argint(0,&pid) < 0 || (argint(1,&sysCallnum) <0)){
