@@ -150,3 +150,11 @@ sys_getPTimes(void){
     return getPTimes(pTimeType, pid);
 }
 
+int
+sys_processState(void){
+    int pid;
+    if(argint(0, &pid) < 0)
+        return -1;
+    return processState(pid);
+}
+

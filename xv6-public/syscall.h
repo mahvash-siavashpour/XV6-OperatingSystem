@@ -25,3 +25,4 @@
 #define SYS_getCount 24
 #define SYS_setPolicy 26
 #define SYS_getPTimes 27
+#define SYS_processState 28

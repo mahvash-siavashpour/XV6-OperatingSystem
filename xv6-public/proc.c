@@ -655,3 +655,15 @@ getPTimes(int type, int pid) {
     }
     return 0;
 }
+
+int
+processState(int pid){
+    struct proc *p;
+    acquire(&ptable.lock);
+    for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
+        if(p->pid == pid)
+            return p->state;
+    }
+    release(&ptable.lock);
+    return 0;
+}
