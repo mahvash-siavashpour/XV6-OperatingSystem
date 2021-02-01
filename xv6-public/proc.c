@@ -92,6 +92,7 @@ allocproc(void) {
     p->runningTime = 0;
     p->sleepingTime = 0;
     p->readyTime = 0;
+    p->priority = 3;
 
     release(&ptable.lock);
 
