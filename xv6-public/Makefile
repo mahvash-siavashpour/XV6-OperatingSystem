@@ -182,7 +182,7 @@ UPROGS=\
 	_wc\
 	_zombie\
 	_getParentIDtest\
-	_rr-test\
+	_roundRobinTest\
 	_getChildrenTest\
 	_getCountTest\
 
@@ -261,7 +261,7 @@ EXTRA=\
 	printf.c umalloc.c\
 	README dot-bochsrc *.pl toc.* runoff runoff1 runoff.list\
 	.gdbinit.tmpl gdbutil\
-	rr-test.c\
+	roundRobinTest.c\
 
 dist:
 	rm -rf dist
