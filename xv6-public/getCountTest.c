@@ -14,8 +14,12 @@ int main(int argc, char *argv[]){
         printf(1,"you forgot to give me arg try agaun \n");
         exit();
     }
-    getpid();
-    getpid();
+    for(int  i =0; i<5;i++){
+        getpid();
+    }
+    for(int  i =0; i<7;i++){
+        getParentID();
+    }
     int x =getCount(getpid(),input);
     printf(1,"syscall %d has been called for %d time[s]\n",input,x);
 
