@@ -127,8 +127,7 @@ extern int             policy;
 int             setPolicy(int);
 void            updateProcTimes(void);
 int             getPTimes(int, int);
-int             processState(int);
-
+int             setPriority(int);
 // swtch.S
 void            swtch(struct context**, struct context*);
 

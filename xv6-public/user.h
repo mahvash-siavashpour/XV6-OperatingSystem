@@ -27,7 +27,7 @@ int getChildren(void*,int);
 int getCount(int, int);
 int setPolicy(int);
 int getPTimes(int, int);
-int             processState(int);
+int setPriority(int);
 
 // ulib.c
 int stat(const char*, struct stat*);

@@ -659,13 +659,7 @@ getPTimes(int type, int pid) {
 }
 
 int
-processState(int pid){
-    struct proc *p;
-    acquire(&ptable.lock);
-    for (p = ptable.proc; p < &ptable.proc[NPROC] && p->state != UNUSED; p++) {
-        if(p->pid == pid)
-            return p->state;
-    }
-    release(&ptable.lock);
+setPriority(int priority){
+
     return 0;
 }

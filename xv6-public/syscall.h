@@ -23,6 +23,6 @@
 #define SYS_getParentID  22
 #define SYS_getChildren  23
 #define SYS_getCount 24
+#define SYS_setPriority 25
 #define SYS_setPolicy 26
 #define SYS_getPTimes 27
-#define SYS_processState 28
