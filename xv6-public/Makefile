@@ -186,6 +186,7 @@ UPROGS=\
 	_getChildrenTest\
 	_getCountTest\
 	_prioritySchedTest\
+	_multiLayeredQueuedTest\
 
 
 fs.img: mkfs README $(UPROGS)
@@ -264,6 +265,7 @@ EXTRA=\
 	.gdbinit.tmpl gdbutil\
 	roundRobinTest.c\
 	prioritySchedTest.c\
+	multiLayeredQueuedTest.c\
 
 dist:
 	rm -rf dist

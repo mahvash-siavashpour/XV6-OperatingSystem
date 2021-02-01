@@ -334,75 +334,103 @@ scheduler(void) {
         // Loop over process table looking for process to run.
         acquire(&ptable.lock);
 
-            for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
-                //for policy 0, 1 (round robin)
-                if (p->state != RUNNABLE)
-                    continue;
+        for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
+            //for policy 0, 1 (round robin)
+            if (p->state != RUNNABLE)
+                continue;
 
-                // for policy 3 (priority selection)
-                if (policy > 1 && policy < 4) {
-                     defaultProcess = p;
-                    // choose one with highest priority
-                    struct proc *p1;
-                    for(p1 = ptable.proc; p1 < &ptable.proc[NPROC]; p1++){
-                        if(p1->state != RUNNABLE)
-                            continue;
-                        if(policy == 2){
-                            if ( defaultProcess->priority > p1->priority )
+            // for policy 3 and 2(priority selection)
+            if (policy > 1 && policy < 4) {
+                defaultProcess = p;
+                // choose one with highest priority
+                struct proc *p1;
+                for (p1 = ptable.proc; p1 < &ptable.proc[NPROC]; p1++) {
+                    if (p1->state != RUNNABLE)
+                        continue;
+                    if (policy == 2) {
+                        if (defaultProcess->priority > p1->priority)
+                            defaultProcess = p1;
+                        else if (defaultProcess->priority == p1->priority) {
+                            if (defaultProcess->groupPriority > p1->groupPriority) {
                                 defaultProcess = p1;
-                            else if(defaultProcess->priority == p1->priority){
-                                if(defaultProcess->groupPriority > p1->groupPriority){
-                                    defaultProcess = p1;
-                                }
                             }
                         }
-                        else
-                        {
-                            if ( defaultProcess->priority < p1->priority )
+                    } else {
+                        if (defaultProcess->priority < p1->priority)
+                            defaultProcess = p1;
+                        else if (defaultProcess->priority == p1->priority) {
+                            if (defaultProcess->groupPriority > p1->groupPriority) {
                                 defaultProcess = p1;
-                            else if(defaultProcess->priority == p1->priority){
-                                if(defaultProcess->groupPriority > p1->groupPriority){
-                                    defaultProcess = p1;
-                                }
-                            
                             }
-                        
+
                         }
+
                     }
-                    defaultProcess->groupPriority ++;
-                    p = defaultProcess;
+                }
+                defaultProcess->groupPriority++;
+                p = defaultProcess;
+            } else if (policy == 4) {
+
+                struct proc *p1;
+                defaultProcess = p;
+                for (p1 = ptable.proc; p1 < &ptable.proc[NPROC]; p1++) {
+                    if (p1->state != RUNNABLE)
+                        continue;
+                    // check queue priority of 2 processes
+                    if (defaultProcess->queuePriority > p1->queuePriority) {
+                        defaultProcess = p1;
+                    }
+                        //if in the same queue pick from their scheduling algorithm
+                    else if (defaultProcess->queuePriority == p1->queuePriority) {
+                        // default or customize round robin
+                        if (defaultProcess->queuePriority < 2) {
+                            if (defaultProcess->groupPriority > p1->groupPriority) {
+                                defaultProcess = p1;
+                            }
+                        }
+                            //priority
+                        else if (defaultProcess->queuePriority == 2) {
+                            if (defaultProcess->priority > p1->priority)
+                                defaultProcess = p1;
+                            else if (defaultProcess->priority == p1->priority) {
+                                if (defaultProcess->groupPriority > p1->groupPriority) {
+                                    defaultProcess = p1;
+                                }
+                            }
+                        }
+                            // reverse priority
+                        else if (defaultProcess->queuePriority == 3) {
+                            if (defaultProcess->priority < p1->priority)
+                                defaultProcess = p1;
+                            else if (defaultProcess->priority == p1->priority) {
+                                if (defaultProcess->groupPriority > p1->groupPriority) {
+                                    defaultProcess = p1;
+                                }
+
+                            }
+                        }
+
+                    }
                 }
 
-                if ( policy == 4){
-                    
-
- 
-
-
-
-
-
-
-
-
-
-
-                }
-
-                // Switch to chosen process.  It is the process's job
-                // to release ptable.lock and then reacquire it
-                // before jumping back to us.
-                c->proc = p;
-                switchuvm(p);
-                p->state = RUNNING;
-
-                swtch(&(c->scheduler), p->context);
-                switchkvm();
-
-                // Process is done running for now.
-                // It should have changed its p->state before coming back.
-                c->proc = 0;
+                defaultProcess->groupPriority++;
+                p = defaultProcess;
             }
+
+            // Switch to chosen process.  It is the process's job
+            // to release ptable.lock and then reacquire it
+            // before jumping back to us.
+            c->proc = p;
+            switchuvm(p);
+            p->state = RUNNING;
+
+            swtch(&(c->scheduler), p->context);
+            switchkvm();
+
+            // Process is done running for now.
+            // It should have changed its p->state before coming back.
+            c->proc = 0;
+        }
 
         release(&ptable.lock);
 
@@ -528,7 +556,7 @@ wakeup(void *chan) {
 int
 kill(int pid) {
     struct proc *p;
-    
+
     acquire(&ptable.lock);
     for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
         if (p->pid == pid) {
@@ -617,32 +645,32 @@ getChildren(void *ch_list, int curpid) {
     children_list[cnt] = 'f';
     release(&ptable.lock);
     return 1;
- 
+
 }
 
-int 
-getCount(int pid, int syscallNum){
-  struct proc *p;
-  
-  for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
-    if (p->pid == pid) {
-      
-    //   cprintf("In the next line you can see how many times a syscall has been called:\n");
-    //   for (int i = 1; i <= 29; i++)
-    //   {
-    //     cprintf("syscall(%d) --> %d time[s]\n",i,p->sysCallCounter[i]);
-    //   }
-    // cprintf("syscall(%d) --> %d time[s]\n",syscallNum,p->sysCallCounter[syscallNum]);
-    return p->sysCallCounter[syscallNum];
+int
+getCount(int pid, int syscallNum) {
+    struct proc *p;
+
+    for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
+        if (p->pid == pid) {
+
+            // cprintf("In the next line you can see how many times a syscall has been called:\n");
+            // for (int i = 1; i <= 29; i++)
+            // {
+            //   cprintf("syscall(%d) --> %d time[s]\n",i,p->sysCallCounter[i]);
+            // }
+            // cprintf("syscall(%d) --> %d time[s]\n",syscallNum,p->sysCallCounter[syscallNum]);
+            return p->sysCallCounter[syscallNum];
+        }
     }
-  } 
-  return -1;
+    return -1;
 }
 
 int
 setPolicy(int newPLC) {
 
-    if (newPLC <= 2 && newPLC >= 0) {
+    if (newPLC <= 4 && newPLC >= 0) {
         policy = newPLC;
         return 1;
     }
@@ -714,19 +742,23 @@ getPTimes(int type, int pid) {
 }
 
 int
-setPriority(int priority){
+setPriority(int priority) {
     struct proc *currp = myproc();
-    if (priority >=1 && priority<=6)
+    acquire(&ptable.lock);
+    if (priority >= 1 && priority <= 6)
         currp->priority = priority;
     else
         currp->priority = 5;
+    release(&ptable.lock);
     return currp->pid;
 }
 
 int
-setQueuePriority(int queuePriority){
+setQueuePriority(int queuePriority) {
     struct proc *currp = myproc();
-    if (queuePriority >=0 && queuePriority<=3)
+    acquire(&ptable.lock);
+    if (queuePriority >= 0 && queuePriority <= 3)
         currp->queuePriority = queuePriority;
+    release(&ptable.lock);
     return currp->pid;
 }

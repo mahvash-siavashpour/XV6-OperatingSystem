@@ -104,7 +104,7 @@ trap(struct trapframe *tf) {
     if (myproc() && myproc()->state == RUNNING &&
         tf->trapno == T_IRQ0 + IRQ_TIMER) {
         // policy 1: round robin with selected quantum
-        if (policy == 1) {
+        if (policy == 1 || myproc()->queuePriority == 1) {
             if (ticks % QUANTUM == 0) {
                 yield();
             }
