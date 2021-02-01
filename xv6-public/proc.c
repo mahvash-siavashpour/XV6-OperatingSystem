@@ -94,7 +94,7 @@ allocproc(void) {
     p->readyTime = 0;
     p->priority = 3;
     p->groupPriority = 0;
-
+    p->queuePriority = 3;
     release(&ptable.lock);
 
     // Allocate kernel stack.
@@ -340,23 +340,53 @@ scheduler(void) {
                     continue;
 
                 // for policy 3 (priority selection)
-                if (policy == 2) {
+                if (policy > 1 && policy < 4) {
                      defaultProcess = p;
                     // choose one with highest priority
                     struct proc *p1;
                     for(p1 = ptable.proc; p1 < &ptable.proc[NPROC]; p1++){
                         if(p1->state != RUNNABLE)
                             continue;
-                        if ( defaultProcess->priority > p1->priority )
-                            defaultProcess = p1;
-                        else if(defaultProcess->priority == p1->priority){
-                            if(defaultProcess->groupPriority > p1->groupPriority){
+                        if(policy == 2){
+                            if ( defaultProcess->priority > p1->priority )
                                 defaultProcess = p1;
+                            else if(defaultProcess->priority == p1->priority){
+                                if(defaultProcess->groupPriority > p1->groupPriority){
+                                    defaultProcess = p1;
+                                }
                             }
+                        }
+                        else
+                        {
+                            if ( defaultProcess->priority < p1->priority )
+                                defaultProcess = p1;
+                            else if(defaultProcess->priority == p1->priority){
+                                if(defaultProcess->groupPriority > p1->groupPriority){
+                                    defaultProcess = p1;
+                                }
+                            
+                            }
+                        
                         }
                     }
                     defaultProcess->groupPriority ++;
                     p = defaultProcess;
+                }
+
+                if ( policy == 4){
+                    
+
+
+
+
+
+
+
+
+
+
+
+
                 }
 
                 // Switch to chosen process.  It is the process's job
@@ -690,5 +720,13 @@ setPriority(int priority){
         currp->priority = priority;
     else
         currp->priority = 5;
+    return currp->pid;
+}
+
+int
+setQueuePriority(int queuePriority){
+    struct proc *currp = myproc();
+    if (queuePriority >=0 && queuePriority<=3)
+        currp->queuePriority = queuePriority;
     return currp->pid;
 }

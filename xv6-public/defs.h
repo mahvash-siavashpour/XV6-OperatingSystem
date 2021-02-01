@@ -128,6 +128,8 @@ int             setPolicy(int);
 void            updateProcTimes(void);
 int             getPTimes(int, int);
 int             setPriority(int);
+int             setQueuePriority(int);
+
 // swtch.S
 void            swtch(struct context**, struct context*);
 

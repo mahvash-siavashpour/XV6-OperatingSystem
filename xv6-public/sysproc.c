@@ -158,3 +158,10 @@ sys_setPriority(void){
     return setPriority(p);
 }
 
+int
+sys_setQueuePriority(void){
+    int p;
+    if(argint(0, &p) < 0)
+        return -1;
+    return setQueuePriority(p);
+}

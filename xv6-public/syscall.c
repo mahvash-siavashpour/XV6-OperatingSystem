@@ -108,6 +108,7 @@ extern int sys_getCount(void);
 extern int sys_setPolicy(void);
 extern int sys_getPTimes(void);
 extern int sys_setPriority(void);
+extern int sys_setQueuePriority(void);
 
 static int (*syscalls[])(void) = {
 [SYS_fork]    sys_fork,
@@ -137,6 +138,7 @@ static int (*syscalls[])(void) = {
 [SYS_setPolicy] sys_setPolicy,
 [SYS_getPTimes] sys_getPTimes,
 [SYS_setPriority] sys_setPriority,
+[SYS_setQueuePriority] sys_setQueuePriority,
 };
 
 void

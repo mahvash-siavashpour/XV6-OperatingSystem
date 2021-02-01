@@ -26,3 +26,5 @@
 #define SYS_setPriority 25
 #define SYS_setPolicy 26
 #define SYS_getPTimes 27
+#define SYS_setQueuePriority 28
+ 
