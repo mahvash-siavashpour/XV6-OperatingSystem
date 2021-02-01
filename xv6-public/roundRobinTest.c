@@ -4,6 +4,7 @@
 
 int main(){
     int childID[10];
+    setPolicy(1);
     for(int k=0;k<10;k++){
         int fpid = fork();
         if(fpid > 0)
@@ -12,7 +13,7 @@ int main(){
         if( fpid == 0){
 
             for(int i=0;i<100;i++){
-                printf(1,"PID: %d i: %d\n",childID[k], i);
+                printf(1,"PID: %d i: %d\n",childID[k]);
             }
             exit();
         }
