@@ -29,6 +29,8 @@ int setPolicy(int);
 int getPTimes(int, int);
 int setPriority(int);
 int setQueuePriority(int);
+int getPriority(int);
+int getQueue(int);
 // ulib.c
 int stat(const char*, struct stat*);
 char* strcpy(char*, const char*);

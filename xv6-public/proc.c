@@ -762,3 +762,31 @@ setQueuePriority(int queuePriority) {
     release(&ptable.lock);
     return currp->pid;
 }
+int
+getPriority(int pid) {
+    struct proc *currp = myproc();
+    acquire(&ptable.lock);
+    struct proc *p;
+    for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
+        if (p->pid == pid) {
+            currp = p;
+            break;
+        }
+    }
+    release(&ptable.lock);
+    return currp->priority;
+}
+int
+getQueue(int pid) {
+    struct proc *currp = myproc();
+    acquire(&ptable.lock);
+    struct proc *p;
+    for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
+        if (p->pid == pid) {
+            currp = p;
+            break;
+        }
+    }
+    release(&ptable.lock);
+    return currp->queuePriority;
+}

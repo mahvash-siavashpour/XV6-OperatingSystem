@@ -122,14 +122,16 @@ void            wakeup(void*);
 void            yield(void);
 int             getParentID(void);
 int             getChildren(void*,int);
-int             getSyscallCounter(int, int); 
+int             getSyscallCounter(int, int);
+int             getQueue(int);
+
 extern int             policy;
 int             setPolicy(int);
 void            updateProcTimes(void);
 int             getPTimes(int, int);
 int             setPriority(int);
 int             setQueuePriority(int);
-
+int             getPriority(int);
 // swtch.S
 void            swtch(struct context**, struct context*);
 
