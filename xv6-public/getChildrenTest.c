@@ -4,7 +4,7 @@
 
 
 int main() {
-   int number_of_children = 5;
+   int number_of_children = 10;
     char mlist[140];
     int parent_id =getpid();
     printf(1,"in test parent_pid %d\n",parent_id);

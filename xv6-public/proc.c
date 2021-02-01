@@ -601,18 +601,19 @@ getChildren(void *ch_list, int curpid) {
 
         if (p->parent->pid == curpid) {
                 int childID = p->pid;
-                // if(childID >9)
-                // {
-                //     children_list[cnt] = (char) ((childID/10) + 48);
-                //     cnt++;
-                //     childID %=10;
-                // }
+                if(childID >9)
+                {
+                    children_list[cnt] = (char) ((childID/10) + 48);
+                    cnt++;
+                    childID %=10;
+                }
                 children_list[cnt] = (char) (childID + 48);
                 cnt++;
                 children_list[cnt] = '*';
                 cnt++;
         }
     }
+    cnt--;
     children_list[cnt] = 'f';
     release(&ptable.lock);
     return 1;
