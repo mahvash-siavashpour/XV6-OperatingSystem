@@ -3,6 +3,7 @@
 #include "user.h"
 
 int main(){
+
 //    int childID[30];
     setPolicy(2);
     for(int k=0;k<30;k++){
