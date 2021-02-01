@@ -2,45 +2,44 @@
 #include "stat.h"
 #include "user.h"
 
-int main(){
-    int childID[10];
-    setPolicy(1);
-    for(int k=0;k<10;k++){
-        int fpid = fork();
-        if(fpid > 0)
-            childID[k] = fpid;
+int main() {
 
-        if( fpid == 0){
+    setPolicy(0);
+    for (int i = 0; i <10 ; ++i) {
+        int fpid= fork();
+        if ( fpid== 0) {
 
-            for(int i=0;i<100;i++){
-                printf(1,"PID: %d i: %d\n",childID[k]);
+            for (int i = 0; i < 100; i++) {
+                for (int j = 0; j <10000 ; ++j) {
+                    getpid();
+                }
+//                printf(1, "PID: %d i: %d\n", getpid(), i);
             }
             exit();
         }
     }
 
-//    int count = 0;
-//    while (count<10){
-//        for(int i=0;i<10;i++){
-//            if(processState(childID[i]) == 0) {
-//                int turnAround = getPTimes(2, childID[i]) - getPTimes(1, childID[i]);
-//                int waitingTime = getPTimes(4, childID[i]);
-//                int cpuBurst = getPTimes(3, childID[i]);
-//                printf(1, "PID: %d has Turnaround Time: %d  and  Waiting Time: %d"
-//                          "  and  CPU Burst Time: %d\n ", childID[i], turnAround, waitingTime, cpuBurst);
-//                count++;
-//            }
-//        }
-//    }
 
-
-
-    for(int i=0; i< 10; i++){
-        wait();
+    for (int i = 0; i <10 ; ++i) {
+        int fpid = wait();
+        int turnAround = getPTimes(2, fpid) - getPTimes(1, fpid);
+        int waitingTime = getPTimes(4, fpid);
+        int sleeping = getPTimes(5, fpid);
+        int cpuBurst = getPTimes(3, fpid);
+        printf(1, "PID: %d | Turnaround Time: %d | Waiting Time: %d"
+                  " | CPU Burst Time: %d | Sleeping Time: %d\n", fpid, turnAround, waitingTime, cpuBurst, sleeping);
     }
 
 
-    printf(1,"PID: %d Parent Running Time: %d\n ",getpid(), getPTimes(2, -1)-getPTimes(1, -1));
+//    fpid = getpid();
+//    turnAround = getPTimes(2, fpid) - getPTimes(1, fpid);
+//    waitingTime = getPTimes(4, fpid);
+//    sleeping = getPTimes(5, fpid);
+//    cpuBurst = getPTimes(3, fpid);
+//    printf(1, "Parent === PID: %d has Turnaround Time: %d \n and  Waiting Time: %d"
+//              "\n  and  CPU Burst Time: %d\n and  Sseeping Time: %d\n ", fpid, turnAround, waitingTime, cpuBurst, sleeping);
+
+//    printf(1, "PID: %d Parent Running Time: %d\n ", getpid(), getPTimes(2, -1) - getPTimes(1, -1));
 
     exit();
 }
