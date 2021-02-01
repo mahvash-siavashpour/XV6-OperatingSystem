@@ -4,7 +4,6 @@
 
 int main(){
 
-//    int childID[30];
     setPolicy(2);
     for(int k=0;k<30;k++){
         int fpid = fork();
@@ -16,15 +15,18 @@ int main(){
             else if(k>24)
                 setPriority(1);
             for(int i=0;i<100;i++){
-                for (int j = 0; j <10000 ; ++j) {
-                    getpid();
-                }
-//                printf(1,"CHILD NUMBER: %d\n",k);
+//                for (int j = 0; j <10000 ; ++j) {
+//                    getpid();
+//                }
+                printf(1,"%d\n",getpid());
             }
+            sleep(1000);
             exit();
         }
     }
-
+    int totalTurnaround = 0;
+    int totalWaiting = 0;
+    int totalBurst = 0;
 
 
 
@@ -34,10 +36,19 @@ int main(){
         int waitingTime = getPTimes(4, fpid);
         int sleeping = getPTimes(5, fpid);
         int cpuBurst = getPTimes(3, fpid);
+        totalTurnaround += turnAround;
+        totalWaiting += waitingTime;
+        totalBurst += cpuBurst;
         printf(1, "PID: %d | Turnaround Time: %d | Waiting Time: %d"
                   " | CPU Burst Time: %d | Sleeping Time: %d\n", fpid, turnAround, waitingTime, cpuBurst, sleeping);
     }
 
+
+
+    totalTurnaround /= 6;
+    totalWaiting /= 6;
+    totalBurst /= 6;
+    printf(1, "AVR: turnaround: %d waiting: %d burst: %d \n", totalTurnaround, totalWaiting, totalBurst);
 
 //    printf(1,"PID: %d Parent\n ",getpid());
 

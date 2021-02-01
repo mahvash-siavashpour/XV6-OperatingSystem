@@ -51,6 +51,7 @@ struct proc {
   char name[16];               // Process name (debugging)
   int sysCallCounter[NSYSCALL];// number of calling of each systemCalls 
   int priority;
+    int groupPriority;
   int creationTime;
   int terminationTime;
   int runningTime;

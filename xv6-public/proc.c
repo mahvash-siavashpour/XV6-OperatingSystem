@@ -93,6 +93,7 @@ allocproc(void) {
     p->sleepingTime = 0;
     p->readyTime = 0;
     p->priority = 3;
+    p->groupPriority = 0;
 
     release(&ptable.lock);
 
@@ -348,7 +349,13 @@ scheduler(void) {
                             continue;
                         if ( defaultProcess->priority > p1->priority )
                             defaultProcess = p1;
+                        else if(defaultProcess->priority == p1->priority){
+                            if(defaultProcess->groupPriority > p1->groupPriority){
+                                defaultProcess = p1;
+                            }
+                        }
                     }
+                    defaultProcess->groupPriority ++;
                     p = defaultProcess;
                 }
 
