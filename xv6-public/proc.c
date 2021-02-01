@@ -590,9 +590,9 @@ getParentID() {
     return parentID;
 }
 
+
 int
 getChildren(void *ch_list, int curpid) {
-
     struct proc *p;
     char *children_list = (char *) ch_list;
     int cnt = 0;
@@ -619,6 +619,7 @@ getChildren(void *ch_list, int curpid) {
     return 1;
  
 }
+
 int 
 getCount(int pid, int syscallNum){
   struct proc *p;
