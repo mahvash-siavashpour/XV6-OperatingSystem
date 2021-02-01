@@ -28,8 +28,6 @@ int main(){
     int totalWaiting = 0;
     int totalBurst = 0;
 
-
-
     for (int i = 0; i <30 ; ++i) {
         int fpid = wait();
         int turnAround = getPTimes(2, fpid) - getPTimes(1, fpid);
@@ -43,14 +41,10 @@ int main(){
                   " | CPU Burst Time: %d | Sleeping Time: %d\n", fpid, turnAround, waitingTime, cpuBurst, sleeping);
     }
 
-
-
-    totalTurnaround /= 6;
-    totalWaiting /= 6;
-    totalBurst /= 6;
+    totalTurnaround /= 30;
+    totalWaiting /= 30;
+    totalBurst /= 30;
     printf(1, "AVR: turnaround: %d waiting: %d burst: %d \n", totalTurnaround, totalWaiting, totalBurst);
-
-//    printf(1,"PID: %d Parent\n ",getpid());
 
     exit();
 }
