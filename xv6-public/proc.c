@@ -644,6 +644,8 @@ getPTimes(int type, int pid) {
             return currp->creationTime;
         case 2:
 //            cprintf("pid: %d => termination: %d\n",currp->pid, currp->terminationTime);
+//            if (currp->terminationTime == 0)
+//                currp -> terminationTime = ticks;
             return currp->terminationTime;
         case 3:
 //            cprintf("pid: %d => running: %d\n",currp->pid, currp->runningTime);
@@ -660,7 +662,7 @@ int
 processState(int pid){
     struct proc *p;
     acquire(&ptable.lock);
-    for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
+    for (p = ptable.proc; p < &ptable.proc[NPROC] && p->state != UNUSED; p++) {
         if(p->pid == pid)
             return p->state;
     }
