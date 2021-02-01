@@ -678,6 +678,10 @@ getPTimes(int type, int pid) {
 
 int
 setPriority(int priority){
-
-    return 0;
+    struct proc *currp = myproc();
+    if (priority >=1 && priority<=6)
+        currp->priority = priority;
+    else
+        currp->priority = 5;
+    return currp->pid;
 }
