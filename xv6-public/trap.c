@@ -47,11 +47,12 @@ trap(struct trapframe *tf) {
             if (cpuid() == 0) {
                 acquire(&tickslock);
                 ticks++;
-                updateProcTimes();
                 wakeup(&ticks);
+                //update time of every process
+                updateProcTimes();
+
                 release(&tickslock);
             }
-            //update time of every process
 
 
             lapiceoi();
