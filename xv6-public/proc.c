@@ -292,7 +292,7 @@ wait(void) {
                 kfree(p->kstack);
                 p->kstack = 0;
                 freevm(p->pgdir);
-//                p->pid = 0;
+            //    p->pid = 0;
                 p->parent = 0;
                 p->name[0] = 0;
                 p->killed = 0;
@@ -376,7 +376,7 @@ scheduler(void) {
                 if ( policy == 4){
                     
 
-
+ 
 
 
 
@@ -587,8 +587,6 @@ getParentID() {
     struct proc *p = myproc();
     p->sysCallCounter[SYS_getParentID]++;
     int parentID = p->parent->pid;
-    // int childID =
-    // cprintf("this is process %d and my parent ID is %d",p->pid,parentID);
     return parentID;
 }
 
@@ -600,23 +598,23 @@ getChildren(void *ch_list, int curpid) {
     int cnt = 0;
     acquire(&ptable.lock);
     for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
-        // cprintf("p -> parent[0] -> pid = %d\n", p -> parent -> pid);
-        // cprintf("curpid %d\n", curpid);
+
         if (p->parent->pid == curpid) {
-            children_list[cnt] = (char) ((p->pid) + 48);
-            cnt++;
-            children_list[cnt] = '*';
-            cnt++;
+                int childID = p->pid;
+                // if(childID >9)
+                // {
+                //     children_list[cnt] = (char) ((childID/10) + 48);
+                //     cnt++;
+                //     childID %=10;
+                // }
+                children_list[cnt] = (char) (childID + 48);
+                cnt++;
+                children_list[cnt] = '*';
+                cnt++;
         }
     }
     children_list[cnt] = 'f';
     release(&ptable.lock);
-    // for(int i =0;i<140;i++){
-    //   children_list[i] = 'a';
-    // }
-    // for(int i =0;i<30;i++){
-    //   cprintf("%d",children_list[i]);
-    // }
     return 1;
  
 }
