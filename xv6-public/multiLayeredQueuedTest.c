@@ -5,6 +5,7 @@
 int main() {
 
     setPolicy(4);
+    int size[] = {10, 10, 10, 10, 40};
     for (int k = 0; k < 40; k++) {
         int fpid = fork();
         if (fpid == 0) {
@@ -27,9 +28,7 @@ int main() {
             }
 
             for (int i = 0; i < 200; i++) {
-//                for (int j = 0; j <10000 ; ++j) {
-//                    getpid();
-//                }
+
                 printf(1, "%d\n", getpid());
             }
             sleep(2000);
@@ -57,9 +56,9 @@ int main() {
                   " | CPU Burst Time: %d | Sleeping Time: %d\n", fpid, turnAround, waitingTime, cpuBurst, sleeping);
     }
     for (int i = 0; i <5 ; ++i) {
-        totalTurnaround[i] /= 40;
-        totalWaiting[i] /= 40;
-        totalBurst[i] /= 40;
+        totalTurnaround[i] /= size[i];
+        totalWaiting[i] /= size[i];
+        totalBurst[i] /= size[i];
     }
 
     printf(1, "AVR: turnaround: %d waiting: %d burst: %d \n", totalTurnaround[4], totalWaiting[4], totalBurst[4]);

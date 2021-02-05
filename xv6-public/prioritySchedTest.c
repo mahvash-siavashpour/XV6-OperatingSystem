@@ -4,6 +4,7 @@
 
 int main(){
 
+    int size[] = {30, 5, 1, 15, 1, 5, 5};
     setPolicy(2);
     for(int k=0;k<30;k++){
         int fpid = fork();
@@ -15,9 +16,7 @@ int main(){
             else if(k>24)
                 setPriority(1);
             for(int i=0;i<250;i++){
-//                for (int j = 0; j <10000 ; ++j) {
-//                    getpid();
-//                }
+
                 printf(1,"%d\n",getpid());
             }
             sleep(1000);
@@ -47,9 +46,9 @@ int main(){
     }
 
     for (int i = 0; i <7 ; ++i) {
-        totalTurnaround[i] /= 30;
-        totalWaiting[i] /= 30;
-        totalBurst[i] /= 30;
+        totalTurnaround[i] /= size[i];
+        totalWaiting[i] /= size[i];
+        totalBurst[i] /= size[i];
     }
     printf(1, "AVR: turnaround: %d waiting: %d burst: %d \n", totalTurnaround[0], totalWaiting[0], totalBurst[0]);
     for (int i=1;i<7;i++){
