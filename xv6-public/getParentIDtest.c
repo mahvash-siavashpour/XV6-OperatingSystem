@@ -8,13 +8,15 @@ int main(){
     int parentID = getpid();
     printf(1,"this is parent process and my id is %d \n",parentID);
     for(int i = 0; i<number_of_children; i++){
-        if(getpid() == parentID ) 
+        if(getpid() == parentID ) {
             if(0 == fork()){
                 printf(1,"this is child %d and my parent is %d\n",getpid(),getParentID());
                 exit();
             }
+            sleep(100);
         }
-    sleep(10);
+    }    
+    
     for(int i=0; i< number_of_children; i++){
         wait();
     }
