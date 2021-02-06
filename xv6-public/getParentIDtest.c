@@ -14,7 +14,7 @@ int main(){
                 exit();
             }
         }
-    
+    sleep(10);
     for(int i=0; i< number_of_children; i++){
         wait();
     }
