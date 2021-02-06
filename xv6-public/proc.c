@@ -656,7 +656,7 @@ getSyscallCounter(int pid, int syscallNum) {
         if (p->pid == pid) {
 
             cprintf("In the next line you can see how many times a syscall has been called:\n");
-            for (int i = 1; i <= 29; i++)
+            for (int i = 1; i <= 30; i++)
             {
               cprintf("syscall(%d) --> %d time[s]\n",i,p->sysCallCounter[i]);
             }

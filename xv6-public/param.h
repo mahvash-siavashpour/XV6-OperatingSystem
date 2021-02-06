@@ -12,4 +12,4 @@
 #define NBUF         (MAXOPBLOCKS*3)  // size of disk block cache
 #define FSSIZE       1000  // size of file system in blocks
 #define QUANTUM      15 // quantum for round robin
-#define NSYSCALL     30 //number of system callsScreenshot from 2021-02-01 18-35-01
+#define NSYSCALL     30 //number of system calls
