@@ -5,6 +5,7 @@
  
 int main(int argc, char *argv[]){
     // char input[2];
+    printf(1,"input = %s",argv[1]);
     int input = 0;
     for (int i = 0; i<2 ; i++){
         input *=10;

@@ -3,8 +3,14 @@
 #include "user.h"
 
 
-int main(){
-    int number_of_children = 5;
+int main(int argc, char *argv[]){
+    int number_of_children = 0;
+    
+    for (int i = 0; i<2 ; i++){
+        number_of_children *=10;
+        number_of_children += ((int)argv[1][i] -48);
+    }
+    printf(1,"%d \n",number_of_children);
     int parentID = getpid();
     printf(1,"this is parent process and my id is %d \n",parentID);
     for(int i = 0; i<number_of_children; i++){
