@@ -682,20 +682,16 @@ updateProcTimes() {
     struct proc *p;
     acquire(&ptable.lock);
     for (p = ptable.proc; p < &ptable.proc[NPROC]; p++) {
-//        if(p->pid > 2)
-//        cprintf("TICKS: %d\n",ticks);
+
         if (p->state == SLEEPING) {
             p->sleepingTime += 1;
-//            if(p->pid > 2)
-//            cprintf("pid: %d >>>>> SLEEPING: %d\n",p->pid, p->sleepingTime);
+
         } else if (p->state == RUNNING) {
             p->runningTime += 1;
-//            if(p->pid > 2)
-//            cprintf("pid: %d >>>>> RUNNING: %d\n",p->pid, p->runningTime);
+
         } else if (p->state == RUNNABLE) {
             p->readyTime += 1;
-//            if(p->pid > 2)
-//            cprintf("pid: %d >>>>> READY: %d\n",p->pid, p->readyTime);
+
         }
     }
     release(&ptable.lock);
@@ -723,15 +719,11 @@ getPTimes(int type, int pid) {
     // 5  sleepingTime;
     switch (type) {
         case 1:
-//            cprintf("pid: %d => creation: %d\n",currp->pid, currp->creationTime);
             return currp->creationTime;
         case 2:
-//            cprintf("pid: %d => termination: %d\n",currp->pid, currp->terminationTime);
-//            if (currp->terminationTime == 0)
-//                currp -> terminationTime = ticks;
+
             return currp->terminationTime;
         case 3:
-//            cprintf("pid: %d => running: %d\n",currp->pid, currp->runningTime);
             return currp->runningTime;
         case 4:
             return currp->readyTime;

@@ -5,7 +5,7 @@
 int main() {
 
     setPolicy(1);
-    for (int i = 0; i <6 ; ++i) {
+    for (int i = 0; i <6 ; i++) {
         int fpid= fork();
         if ( fpid== 0) {
 
@@ -15,7 +15,7 @@ int main() {
 //                }
                 printf(1, " %d \n", getpid());
             }
-            sleep(100);
+            sleep(300);
             exit();
         }
     }
@@ -24,7 +24,7 @@ int main() {
     int totalWaiting = 0;
     int totalBurst = 0;
 
-    for (int i = 0; i <6 ; ++i) {
+    for (int i = 0; i <6 ; i++) {
         int fpid = wait();
         int turnAround = getPTimes(2, fpid) - getPTimes(1, fpid);
         int waitingTime = getPTimes(4, fpid);
